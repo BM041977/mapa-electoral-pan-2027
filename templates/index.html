@@ -1,0 +1,550 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BaldemarMaza.com — Mapas Electorales Chiapas 2027</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg:           #FBF9F4;
+    --bg-card:      #FFFFFF;
+    --ink:          #1A1A1A;
+    --ink-soft:     #5A5A5A;
+    --line:         #E8E4DC;
+    --accent:       #2D2D2D;
+    --accent-soft:  #ECECEC;
+    --shadow-sm:    0 1px 2px rgba(26,26,26,0.04);
+    --shadow-md:    0 8px 24px rgba(26,26,26,0.08);
+    --shadow-lg:    0 16px 48px rgba(26,26,26,0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Manrope', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(26,26,26,0.04) 1px, transparent 0);
+    background-size: 24px 24px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 56px;
+    animation: fadeUp 0.6s ease-out;
+}
+
+.brand-mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--ink);
+    position: relative;
+    flex-shrink: 0;
+}
+
+.brand-mark::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 14px;
+    height: 14px;
+    border: 2px solid #888888;
+    border-radius: 50%;
+}
+
+.brand-mark::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 4px;
+    background: #888888;
+    border-radius: 50%;
+}
+
+.brand-name {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+}
+
+.brand-tld {
+    color: var(--ink-soft);
+    font-weight: 500;
+}
+
+header {
+    margin-bottom: 64px;
+    animation: fadeUp 0.7s ease-out;
+}
+
+.eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+}
+
+h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(36px, 5.5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    max-width: 720px;
+}
+
+h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink-soft);
+}
+
+.lead {
+    margin-top: 20px;
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 560px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    flex: 1;
+}
+
+@media (max-width: 900px) {
+    .cards { grid-template-columns: 1fr; }
+    .wrap { padding: 48px 20px 100px; }
+}
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 36px 32px 32px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    animation: fadeUp 0.7s ease-out backwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.10s; }
+.card:nth-child(2) { animation-delay: 0.20s; }
+.card:nth-child(3) { animation-delay: 0.30s; }
+.card:nth-child(4) { animation-delay: 0.40s; }
+.card:nth-child(5) { animation-delay: 0.50s; }
+.card:nth-child(6) { animation-delay: 0.60s; }
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--accent);
+}
+
+.card:hover::after { transform: scaleX(1); }
+
+.card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+    transition: background 0.25s ease;
+}
+
+.card:hover .card-icon {
+    background: var(--accent);
+    color: white;
+}
+
+.card-icon svg { width: 28px; height: 28px; }
+
+.card-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+}
+
+.card-question {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+.card-desc {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+    flex: 1;
+}
+
+.card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.tag {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink-soft);
+}
+
+.card-cta {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: auto;
+}
+
+.card-cta svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.25s ease;
+}
+
+.card:hover .card-cta svg { transform: translateX(4px); }
+
+#contador {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+    background: white;
+    padding: 10px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+#contador::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #888888;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+#contador.alerta {
+    background: #FEF2F2;
+    color: #B91C1C;
+    border-color: #FECACA;
+    font-weight: 600;
+}
+
+#contador.alerta::before { background: #DC2626; }
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout-link {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.logout-link:hover { color: var(--accent); }
+
+@media (max-width: 480px) {
+    footer { flex-direction: column; gap: 8px; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+    <div class="brand">
+        <img src="/static/logo_pan.png" alt="Baldemar Maza León" style="height:180px;width:auto;">
+    </div>
+
+    <header>
+        <div class="eyebrow">Elección · Chiapas 2027</div>
+        <h1>¿Quién compite? ¿Quién gana? <em>¿Por qué?</em></h1>
+        <p class="lead">26 años de historia electoral de Chiapas. Mapas, candidatos, secciones y diagnósticos municipales — todo en un solo lugar.</p>
+    </header>
+
+    <div class="cards">
+
+        <a class="card" href="/mapa">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1"/>
+                </svg>
+            </div>
+            <div class="card-title">Mapa Sección</div>
+            <p class="card-question">¿Quién ganó cada zona?</p>
+            <p class="card-desc">Vista política territorial. Cada sección coloreada por su partido ganador. Útil para entender de un vistazo el mapa de poder territorial del estado.</p>
+            <div class="card-meta">
+                <span class="tag">Elección 2024</span>
+                <span class="tag">Color por ganador</span>
+                <span class="tag">Vista territorial</span>
+            </div>
+            <div class="card-cta">
+                Abrir mapa
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M13 5l7 7-7 7"/>
+                </svg>
+            </div>
+        </a>
+
+        <a class="card" href="/mapa-partidos">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
+            </div>
+            <div class="card-title">Mapa Partido</div>
+            <p class="card-question">¿Cómo le fue al partido X?</p>
+            <p class="card-desc">Vista por fuerza electoral. Filtra por cada partido y observa dónde tiene presencia, aunque no haya ganado. Incluye Top 3 por sección y detalle de casillas.</p>
+            <div class="card-meta">
+                <span class="tag">Elección 2024</span>
+                <span class="tag">Filtros por partido</span>
+                <span class="tag">Top 3 + casillas</span>
+            </div>
+            <div class="card-cta">
+                Abrir mapa
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M13 5l7 7-7 7"/>
+                </svg>
+            </div>
+        </a>
+
+        <a class="card" href="/datos-secciones">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="16" rx="2"/>
+                    <line x1="3" y1="10" x2="21" y2="10"/>
+                    <line x1="9" y1="10" x2="9" y2="20"/>
+                </svg>
+            </div>
+            <div class="card-title">Datos por Sección</div>
+            <p class="card-question">¿Qué dicen los números de fondo?</p>
+            <p class="card-desc">Vista tabular completa. Las 2,278 secciones del estado con ganador, votos, participación y margen. Filtra por municipio, distrito o partido. Exporta a CSV.</p>
+            <div class="card-meta">
+                <span class="tag">Elección 2024</span>
+                <span class="tag">Tabla buscable</span>
+                <span class="tag">Filtros y export</span>
+            </div>
+            <div class="card-cta">
+                Abrir datos
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M13 5l7 7-7 7"/>
+                </svg>
+            </div>
+        </a>
+
+        <a class="card" href="/historico">
+            <div class="card-icon">📅</div>
+            <div class="card-title">Histórico Electoral</div>
+            <p class="card-question">¿Cómo ha votado cada sección desde 1998?</p>
+            <p class="card-desc">26 años de historia electoral por sección. Visualiza quién ganó en cada sección en cada elección desde 1998 hasta 2024. Cambia el año y ve la evolución del voto.</p>
+            <div class="card-meta">
+                <span class="tag">1998–2024</span>
+                <span class="tag">Por sección</span>
+            </div>
+            <div class="card-cta">
+                Ver histórico
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10h12M10 4l6 6-6 6"/></svg>
+            </div>
+        </a>
+
+        <a class="card" href="/candidatos">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+                    <line x1="19" y1="8" x2="19" y2="14"/>
+                    <line x1="22" y1="11" x2="16" y2="11"/>
+                </svg>
+            </div>
+            <div class="card-title">Trayectoria de Candidatos</div>
+            <p class="card-question">¿Quién ha competido y cuántas veces?</p>
+            <p class="card-desc">Historial completo de candidatos desde 1998 hasta 2024. Busca por nombre o explora quiénes han competido en tu municipio, con qué partidos y si ganaron o perdieron.</p>
+            <div class="card-meta">
+                <span class="tag">1998–2024</span>
+                <span class="tag">Por candidato</span>
+                <span class="tag">Por municipio</span>
+            </div>
+            <div class="card-cta">
+                Ver candidatos
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M13 5l7 7-7 7"/>
+                </svg>
+            </div>
+        </a>
+
+        <a class="card" href="/diagnosticos">
+            <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                </svg>
+            </div>
+            <div class="card-title">Diagnósticos</div>
+            <p class="card-question">¿Qué dice el análisis de mi municipio?</p>
+            <p class="card-desc">123 diagnósticos municipales en PDF. Análisis completo por sección, tendencia de voto, fortalezas y riesgos electorales de cara a 2027.</p>
+            <div class="card-meta">
+                <span class="tag">123 municipios</span>
+                <span class="tag">Descarga PDF</span>
+            </div>
+            <div class="card-cta">
+                Ver diagnósticos
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M13 5l7 7-7 7"/>
+                </svg>
+            </div>
+        </a>
+
+    </div>
+
+    <footer>
+        <span>© {{ owner }} · Ayuntamientos Chiapas 2027</span>
+        <a href="/logout" class="logout-link">Cerrar sesión</a>
+    </footer>
+
+</div>
+
+<div id="contador" aria-live="polite">⏳ 20:00</div>
+
+<script>
+(function () {
+    const DURACION_MS = 1200000;
+    const UMBRAL = 30;
+    const URL_LOGOUT = '/logout';
+    const expira = Date.now() + DURACION_MS;
+    const c = document.getElementById('contador');
+    let expirado = false, iv;
+
+    function tick() {
+        const r = Math.max(0, Math.ceil((expira - Date.now()) / 1000));
+        const min = Math.floor(r / 60);
+        const sec = r % 60;
+        c.textContent = '⏳ ' + min + ':' + (sec < 10 ? '0' : '') + sec;
+        if (r <= UMBRAL && r > 0) c.classList.add('alerta');
+        if (r <= 0 && !expirado) {
+            expirado = true;
+            clearInterval(iv);
+            alert('Sesión expirada');
+            window.location.href = URL_LOGOUT;
+        }
+    }
+    tick();
+    iv = setInterval(tick, 1000);
+})();
+</script>
+
+</body>
+</html>
